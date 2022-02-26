@@ -83,7 +83,16 @@
       }
 
       function getProduct() {
-
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function(){
+          if(this.readyState === XMLHttpRequest.DONE && this.status === 200){
+            displayMessage("Product Retrieved");
+            console.log(this.response);
+            setInput(JSON.parse(this.response));
+          }
+        };
+        req.open("GET", URL + "/" + getValue("productID"));
+        req.send();
       }
 
       function insertProduct() {
