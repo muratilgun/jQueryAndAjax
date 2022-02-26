@@ -69,3 +69,18 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+form .row label {
+  display: inline-block !important;
+  min-width: 10em !important;
+}
+
+.infoMessage {
+  font-weight: bold;
+}
+
+.errorMessage {
+  font-weight: bold;
+  background-color: red;
+  color: white;
+}
