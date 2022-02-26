@@ -96,7 +96,19 @@
       }
 
       function insertProduct() {
-
+          let product = getFromInput();
+          let req = new XMLHttpRequest();
+          req.onreadystatechange = function() {
+            if(this.readyState === XMLHttpRequest.DONE && this.status === 201){
+              product = JSON.parse(this.response);
+              displayMessage("Product Inserted");
+              console.log(product);
+              setInput(product);
+            }
+          };
+          req.open("POST", URL);
+          req.setRequestHeader("Content-Type","application/json");
+          req.send(JSON.stringify(product));
       }
 
       function updateProduct() {
