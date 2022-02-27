@@ -69,19 +69,40 @@
       'use strict';
 
       const URL = "http://localhost:5000/api/product";
+      //XMLHttpRequest
+      // function get() {
+      //   let req = new XMLHttpRequest();
+      //   req.onreadystatechange = function () {
+      //     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      //       console.log(this.response);
+      //       displayMessage("Products Retrieved");
+      //     }
+      //   };
+      //   req.open("GET", URL);
+      //   req.send();
+      // }
 
       function get() {
-        let req = new XMLHttpRequest();
-        req.onreadystatechange = function () {
-          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            console.log(this.response);
-            displayMessage("Products Retrieved");
-          }
-        };
-        req.open("GET", URL);
-        req.send();
+        fetch(URL)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error=> handleAjaxError(error));
       }
-
+      function getWithOptions(){
+        fetch(URL, {
+          method: 'GET',                //GET,POST,PUT,DELETE, etc.
+          mode: 'cors',                 // cors, no-cors, *cors, same-origin 
+          cache: 'no-cache',            // *default, no-cache, reload,
+                                        //  force-cache, only-if-cache
+          credentials: 'same-origin',    // include, *same-origin, omit
+          headers :{
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response=> response.json())
+        .then(data => console.log(data))
+        .catch(error => handleAjaxError(error));
+      }
       function getProduct() {
         let req = new XMLHttpRequest();
         req.onreadystatechange = function(){
