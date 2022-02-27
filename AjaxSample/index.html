@@ -104,6 +104,13 @@
               displayMessage("Product Inserted");
               console.log(product);
               setInput(product);
+            }else if(this.readyState === XMLHttpRequest.DONE && this.status >= 400){
+                handleAjaxError({
+                  "status": this.status,
+                  "statusText": this.statusText,
+                  "response" : this.response,
+                  "responseText": this.responseText
+                })
             }
           };
           req.open("POST", URL);
