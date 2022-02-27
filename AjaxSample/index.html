@@ -82,6 +82,29 @@
       //   req.send();
       // }
 
+      // function insertProduct() {
+      //     let product = getFromInput();
+      //     let req = new XMLHttpRequest();
+      //     req.onreadystatechange = function() {
+      //       if(this.readyState === XMLHttpRequest.DONE && this.status === 201){
+      //         product = JSON.parse(this.response);
+      //         displayMessage("Product Inserted");
+      //         console.log(product);
+      //         setInput(product);
+      //       }else if(this.readyState === XMLHttpRequest.DONE && this.status >= 400){
+      //           handleAjaxError({
+      //             "status": this.status,
+      //             "statusText": this.statusText,
+      //             "response" : this.response,
+      //             "responseText": this.responseText
+      //           })
+      //       }
+      //     };
+      //     req.open("POST", URL);
+      //     req.setRequestHeader("Content-Type","application/json");
+      //     req.send(JSON.stringify(product));
+      // }
+
       function get() {
         fetch(URL)
         .then(response => response.json())
@@ -115,30 +138,20 @@
         req.open("GET", URL + "/" + getValue("productID"));
         req.send();
       }
-
-      function insertProduct() {
-          let product = getFromInput();
-          let req = new XMLHttpRequest();
-          req.onreadystatechange = function() {
-            if(this.readyState === XMLHttpRequest.DONE && this.status === 201){
-              product = JSON.parse(this.response);
-              displayMessage("Product Inserted");
-              console.log(product);
-              setInput(product);
-            }else if(this.readyState === XMLHttpRequest.DONE && this.status >= 400){
-                handleAjaxError({
-                  "status": this.status,
-                  "statusText": this.statusText,
-                  "response" : this.response,
-                  "responseText": this.responseText
-                })
-            }
-          };
-          req.open("POST", URL);
-          req.setRequestHeader("Content-Type","application/json");
-          req.send(JSON.stringify(product));
+      function insertProduct(){
+        let product = getFromInput();
+        let options  = {
+          method: 'POST',
+          headers: { 'Content-Type' : 'application/json'},
+          body: JSON.stringify(product)
+        };
+        fetch(URL, options)
+        .then(response => response.json()
+        .then(data=> {
+          console.log(data);
+          setInput(data);
+        }).catch(error=> handleAjaxError(error)))
       }
-
       function updateProduct() {
 
       }
