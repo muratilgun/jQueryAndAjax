@@ -214,7 +214,7 @@
           });
         }
       // #endregion
-      //#region getProduct_promises
+      //#region getProduct_2_promises
       function getProduct() { 
         $.ajax(URL + "/" + getValue("productID"))
         .done(function(data){
@@ -230,21 +230,45 @@
         });
        }
       //#endregion
-      
+      //#region insertProduct_2
+      // function insertProduct(){
+      //   let product = getFromInput();
+      //   let options  = {
+      //     method: 'POST',
+      //     headers: { 'Content-Type' : 'application/json'},
+      //     body: JSON.stringify(product)
+      //   };
+      //   fetch(URL, options)
+      //   .then(response => response.json()
+      //   .then(data=> {
+      //     console.log(data);
+      //     setInput(data);
+      //   }).catch(error=> handleAjaxError(error)))
+      // }
+      //#endregion
+      //#region insertProduct_3_promises
       function insertProduct(){
         let product = getFromInput();
-        let options  = {
-          method: 'POST',
-          headers: { 'Content-Type' : 'application/json'},
-          body: JSON.stringify(product)
-        };
-        fetch(URL, options)
-        .then(response => response.json()
-        .then(data=> {
+        $.ajax({
+          url: URL,
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(product)
+        }).done(function(data){
+          displayMessage("Product Inserted");
           console.log(data);
           setInput(data);
-        }).catch(error=> handleAjaxError(error)))
+        })
+        .fail(function (error) {
+          handleAjaxError(error);
+        })
+        .always(function(){
+
+        });
+          
       }
+      //#endregion
+      
       function updateProduct() {
 
       }
