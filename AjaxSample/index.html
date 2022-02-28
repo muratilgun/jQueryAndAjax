@@ -70,7 +70,7 @@
       'use strict';
 
       const URL = "http://localhost:5000/api/product";
-      // #region get_1_XMLHttpRequest
+      //#region get_1_XMLHttpRequest
       //XMLHttpRequest
       // function get() {
       //   let req = new XMLHttpRequest();
@@ -83,8 +83,8 @@
       //   req.open("GET", URL);
       //   req.send();
       // }
-      // #endregion
-      // #region getproduct_1
+      //#endregion
+      //#region getproduct_1
       // function getProduct() {
       //   let req = new XMLHttpRequest();
       //   req.onreadystatechange = function(){
@@ -97,8 +97,8 @@
       //   req.open("GET", URL + "/" + getValue("productID"));
       //   req.send();
       // }
-      // #endregion 
-      // #region insertProduct_1
+      //#endregion 
+      //#region insertProduct_1
       // function insertProduct() {
       //     let product = getFromInput();
       //     let req = new XMLHttpRequest();
@@ -122,7 +122,7 @@
       //     req.send(JSON.stringify(product));
       // }
       // #endregion
-      // #region get_2_fetch_api
+      //#region get_2_fetch_api
       // function get() {
       //   fetch(URL)
       //   .then(response => response.json())
@@ -146,7 +146,7 @@
       //   .catch(error => handleAjaxError(error));
       // }
       // #endregion
-      // #region get_3_handling_error
+      //#region get_3_handling_error
       let _lastStatus = {
         "status": 0,
         "statusText" : "",
@@ -180,7 +180,7 @@
         }
       }
       // #endregion
-      // #region get_4_ajax_callbacks
+      //#region get_4_ajax_callbacks
       // function get() {
       //   $.ajax({
       //     url: URL,
@@ -199,8 +199,7 @@
       //   });
       // }
       // #endregion
-     
-      // #region get_5_done_fail_always
+      //#region get_5_done_fail_always
       function get() {
         $.ajax(URL)
         .done(function(data){
@@ -215,6 +214,23 @@
           });
         }
       // #endregion
+      //#region getProduct_promises
+      function getProduct() { 
+        $.ajax(URL + "/" + getValue("productID"))
+        .done(function(data){
+          displayMessage("Product Retrieved");
+          console.log(data);
+          setInput(data);
+        })
+        .fail(function(error){
+          handleAjaxError(error);
+        })
+        .always(function () {
+          console.log("In the always() method");
+        });
+       }
+      //#endregion
+      
       function insertProduct(){
         let product = getFromInput();
         let options  = {
