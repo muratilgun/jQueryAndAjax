@@ -65,6 +65,7 @@
 
     <script src="/scripts/ajax-common.js"></script>
     <script src="/scripts/product.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
       'use strict';
 
@@ -83,7 +84,20 @@
       //   req.send();
       // }
       // #endregion
-      
+      // #region getproduct_1
+      // function getProduct() {
+      //   let req = new XMLHttpRequest();
+      //   req.onreadystatechange = function(){
+      //     if(this.readyState === XMLHttpRequest.DONE && this.status === 200){
+      //       displayMessage("Product Retrieved");
+      //       console.log(this.response);
+      //       setInput(JSON.parse(this.response));
+      //     }
+      //   };
+      //   req.open("GET", URL + "/" + getValue("productID"));
+      //   req.send();
+      // }
+      // #endregion 
       // #region insertProduct_1
       // function insertProduct() {
       //     let product = getFromInput();
@@ -108,7 +122,6 @@
       //     req.send(JSON.stringify(product));
       // }
       // #endregion
-      
       // #region get_2_fetch_api
       // function get() {
       //   fetch(URL)
@@ -133,6 +146,7 @@
       //   .catch(error => handleAjaxError(error));
       // }
       // #endregion
+      // #region get_3_handling_error
       let _lastStatus = {
         "status": 0,
         "statusText" : "",
@@ -152,6 +166,7 @@
         })
         .catch(error => handleAjaxError(error));
       }
+      
       function processResponse(resp) {
         _lastStatus.status = resp.status;
         _lastStatus.statusText = resp.statusText;
@@ -164,21 +179,27 @@
           return null;
         }
       }
-
-
-
-      function getProduct() {
-        let req = new XMLHttpRequest();
-        req.onreadystatechange = function(){
-          if(this.readyState === XMLHttpRequest.DONE && this.status === 200){
-            displayMessage("Product Retrieved");
-            console.log(this.response);
-            setInput(JSON.parse(this.response));
+      // #endregion
+      
+      function get() {
+        $.ajax({
+          url: URL,
+          type: 'GET',
+          contentType: "application/json",
+          success: function (data) {
+              displayMessage("Products Retrieved");
+              console.log(data);
+            },
+          error: function(error){
+            handleAjaxError(error);
+          },
+          complete: function () {  
+            console.log("In the complete function");
           }
-        };
-        req.open("GET", URL + "/" + getValue("productID"));
-        req.send();
+        });
       }
+
+     
       function insertProduct(){
         let product = getFromInput();
         let options  = {
