@@ -180,26 +180,41 @@
         }
       }
       // #endregion
-      
-      function get() {
-        $.ajax({
-          url: URL,
-          type: 'GET',
-          contentType: "application/json",
-          success: function (data) {
-              displayMessage("Products Retrieved");
-              console.log(data);
-            },
-          error: function(error){
-            handleAjaxError(error);
-          },
-          complete: function () {  
-            console.log("In the complete function");
-          }
-        });
-      }
-
+      // #region get_4_ajax_callbacks
+      // function get() {
+      //   $.ajax({
+      //     url: URL,
+      //     type: 'GET',
+      //     contentType: "application/json",
+      //     success: function (data) {
+      //         displayMessage("Products Retrieved");
+      //         console.log(data);
+      //       },
+      //     error: function(error){
+      //       handleAjaxError(error);
+      //     },
+      //     complete: function () {  
+      //       console.log("In the complete function");
+      //     }
+      //   });
+      // }
+      // #endregion
      
+      // #region get_5_done_fail_always
+      function get() {
+        $.ajax(URL)
+        .done(function(data){
+          displayMessage("Products Retrieved");
+          console.log(data);
+        })
+        .fail(function (error) {
+          handleAjaxError(error);
+          })
+        .always(function () {
+           console.log("In the always() method");
+          });
+        }
+      // #endregion
       function insertProduct(){
         let product = getFromInput();
         let options  = {
