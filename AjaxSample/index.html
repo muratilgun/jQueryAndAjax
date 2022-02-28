@@ -69,6 +69,7 @@
       'use strict';
 
       const URL = "http://localhost:5000/api/product";
+      // #region get_1_XMLHttpRequest
       //XMLHttpRequest
       // function get() {
       //   let req = new XMLHttpRequest();
@@ -81,7 +82,9 @@
       //   req.open("GET", URL);
       //   req.send();
       // }
-
+      // #endregion
+      
+      // #region insertProduct_1
       // function insertProduct() {
       //     let product = getFromInput();
       //     let req = new XMLHttpRequest();
@@ -104,28 +107,66 @@
       //     req.setRequestHeader("Content-Type","application/json");
       //     req.send(JSON.stringify(product));
       // }
-
-      function get() {
-        fetch(URL)
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error=> handleAjaxError(error));
+      // #endregion
+      
+      // #region get_2_fetch_api
+      // function get() {
+      //   fetch(URL)
+      //   .then(response => response.json())
+      //   .then(data => console.log(data))
+      //   .catch(error=> handleAjaxError(error));
+      // }
+      
+      // function getWithOptions(){
+      //   fetch(URL, {
+      //     method: 'GET',                //GET,POST,PUT,DELETE, etc.
+      //     mode: 'cors',                 // cors, no-cors, *cors, same-origin 
+      //     cache: 'no-cache',            // *default, no-cache, reload,
+      //                                   //  force-cache, only-if-cache
+      //     credentials: 'same-origin',    // include, *same-origin, omit
+      //     headers :{
+      //       'Content-Type': 'application/json'
+      //     }
+      //   })
+      //   .then(response=> response.json())
+      //   .then(data => console.log(data))
+      //   .catch(error => handleAjaxError(error));
+      // }
+      // #endregion
+      let _lastStatus = {
+        "status": 0,
+        "statusText" : "",
+        "ok" : false
       }
-      function getWithOptions(){
-        fetch(URL, {
-          method: 'GET',                //GET,POST,PUT,DELETE, etc.
-          mode: 'cors',                 // cors, no-cors, *cors, same-origin 
-          cache: 'no-cache',            // *default, no-cache, reload,
-                                        //  force-cache, only-if-cache
-          credentials: 'same-origin',    // include, *same-origin, omit
-          headers :{
-            'Content-Type': 'application/json'
+      function get(){
+        fetch(URL)
+        .then(response => processResponse(response))
+        .then(data=> {
+          if(_lastStatus.ok){
+            displayMessage("Products Retrieved");
+            console.log(data);
+          }
+          else{
+            displayError(_lastStatus.statusText);
           }
         })
-        .then(response=> response.json())
-        .then(data => console.log(data))
         .catch(error => handleAjaxError(error));
       }
+      function processResponse(resp) {
+        _lastStatus.status = resp.status;
+        _lastStatus.statusText = resp.statusText;
+        _lastStatus.ok =resp.ok;
+
+        console.log(_lastStatus);
+        if(_lastStatus.ok){
+          return resp.json();
+        } else {
+          return null;
+        }
+      }
+
+
+
       function getProduct() {
         let req = new XMLHttpRequest();
         req.onreadystatechange = function(){
