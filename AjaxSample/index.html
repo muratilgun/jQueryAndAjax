@@ -60,6 +60,13 @@
         <button type="button" onclick="deleteProduct();">
           Delete Product
         </button>
+        <button type="button" onclick="incorrectTryCatch();">
+          incorrect try..catch Product
+        </button>
+
+        <button type="button" onclick="correctTryCatch();">
+          Correct try..catch Product
+        </button>
       </div>
     </form>
 
@@ -306,6 +313,58 @@
         .always(function(){
         });
         
+      }
+      
+      function incorrectTryCatch() { 
+        try {
+          console.log("In the try block");
+          $.ajax({
+            url: URL,
+            type: 'GET',
+            contentType: "application/json"
+          })
+          .done(function(data){
+            console.log("Retrieved the data");
+            console.log(data);
+          })
+          .fail(function(error){
+            handleAjaxError(error);
+          })
+          .always(function(){
+             console.log("In the always() method");
+          });
+        } catch (error) {
+          console.log("In the catch block");
+          console.error(error);
+        }
+        finally{
+          console.log("In the finally block");
+        }
+        console.log("Ending this function");
+       }
+       
+      function correctTryCatch(){
+        $.ajax({
+          url: URL,
+          type: 'GET',
+          contentType: "application/json"
+        })
+        .done(function(data){
+          // try..catch herhangi bir promise methodunun içerisinde yer alabilir.
+          try {
+            console.log(data);
+          } catch (error) {
+            console.log(error);
+          }
+        })
+        .fail(function(error){
+          // try..catch herhangi bir promise methodunun içerisinde yer alabilir.
+          handleAjaxError(error);
+        })
+        .always(function(){
+          // try..catch herhangi bir promise methodunun içerisinde yer alabilir.
+          console.log("In the always() methods");
+        })
       }
     </script>
   </body>
