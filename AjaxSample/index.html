@@ -270,7 +270,24 @@
       //#endregion
       
       function updateProduct() {
+        let product = getFromInput();
+        $.ajax({
+          url: URL + "/" + product.productID,
+          type: "PUT",
+          contentType: "application/json",
+          data: JSON.stringify(product)
+        })
+        .done(function (data) {
+          displayMessage("Product Inserted");
+          console.log(data);
+          setInput(data);
+          })
+          .fail(function(error){
+            handleAjaxError(error);
+          })
+          .always(function(){
 
+          });
       }
 
       function deleteProduct() {
