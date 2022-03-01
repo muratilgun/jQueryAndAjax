@@ -291,7 +291,21 @@
       }
 
       function deleteProduct() {
-
+        $.ajax({
+          url: URL + "/" + getValue("productID"),
+          type: "DELETE"
+        })
+        .done(function(data){
+          displayMessage("Product Deleted");
+          console.log(data);
+          clearInput();
+        })
+        .fail(function (error) {
+          handleAjaxError(error);
+        })
+        .always(function(){
+        });
+        
       }
     </script>
   </body>
