@@ -382,6 +382,14 @@
       $(document).ajaxSend(function (event,xhr,settings) {
         console.log(settings);
       })
+
+      $(document).ajaxSuccess(function(){
+        console.log("An Ajax call has finished successfully");
+      });
+
+      $(document).ajaxSuccess(function(event,xhr,settings){
+        console.log(settings);
+      });
       //#endregion
    </script>
   </body>
