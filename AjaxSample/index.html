@@ -275,7 +275,7 @@
           
       }
       //#endregion
-      
+      //#region module_4
       function updateProduct() {
         let product = getFromInput();
         $.ajax({
@@ -366,7 +366,16 @@
           console.log("In the always() methods");
         })
       }
-    </script>
+      
+      //#endregion
+      $(document).ajaxStart(function () {
+        console.log("The first Ajax call is being fired");
+      })
+      $(document).ajaxStop(function(){
+        console.log("The last Ajax call has completed");
+      })
+
+   </script>
   </body>
 
 </html>
