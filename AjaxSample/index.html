@@ -390,6 +390,23 @@
       $(document).ajaxSuccess(function(event,xhr,settings){
         console.log(settings);
       });
+
+      $(document).ajaxComplete(function(){
+        console.log("Ajax call is complete");
+      })
+      $(document).ajaxComplete(function(event,xhr,settings){
+        console.log(settings.url);
+        console.log(xhr.responseText);
+      });
+
+      $(document).ajaxError(function(){
+        console.log("Ajax call had an ERROR");
+      });
+      $(document).ajaxError(function (event,xhr,settings,thrownError) {
+        console.log("Ajax call had an ERROR");
+        console.log(thrownError);
+        console.log(settings);
+        })
       //#endregion
    </script>
   </body>
