@@ -48,6 +48,9 @@
         <button type="button" onclick="theNestingProblem();">
           Nesting Problem
         </button>
+        <button type="button" onclick="theNestingSolution();">
+          Nesting Solution
+        </button>
       </div>
     </form>
 
@@ -70,6 +73,31 @@
             });
           });
         });
+      }
+
+      function theNestingSolution() {
+        var def = $.Deferred();
+        def
+          .then(function () {
+            return $.get(URL + "/product").done(function (data) {
+              console.log(data);
+            });
+          })
+          .then(
+            function () {
+              return $.get(URL + "/productcategory").done(function (data) {
+                console.log(data);
+              });
+            })
+          .then(
+            function () {
+              return $.get(URL + "/productmodel").done(function (data) {
+                console.log(data);
+              });
+            }
+          );
+
+        def.resolve();
       }
 
     </script>
