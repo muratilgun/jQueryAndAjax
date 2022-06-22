@@ -57,6 +57,9 @@
         <button type="button" onclick="setTimeoutDeferred();">
           setTimeout Deferred
         </button>
+        <button type="button" onclick="performCounting();">
+          Notify Event
+        </button>
       </div>
     </form>
 
@@ -121,13 +124,48 @@
         // Return the Deferred's Promise object
         return def.promise();
       }
-
       function setTimeoutDeferred() {
         timeout(1000).then(() => {
           console.log('Displayed after one second...');
         });
       }
 
+      function counter(total, notifyOn) {
+        // Create a new Deferred object
+        var def = $.Deferred();
+
+        let count = 0;
+        // Simulate making some call using setInterval()
+        let id = setInterval(function () {
+          count++;
+          if ((count % notifyOn) === 0) {
+            def.notify(count);
+          }
+          if (count === total) {
+            def.resolve();
+            clearInterval(id);
+          }
+        }, 1);
+
+        // Return the Deferred's Promise object
+        return def.promise();
+      }
+
+      function performCounting() {
+        // Get promise from the counter() function
+        let promise = counter(200, 10);
+
+        // Connect to the progress() method
+        promise.progress(function (data) {
+          console.log(data);
+        });
+
+        // Connect to the done() method
+        // Could also use the then() method
+        promise.done(function () {
+          console.log('Finished Counting');
+        });
+      }
     </script>
   </body>
 
