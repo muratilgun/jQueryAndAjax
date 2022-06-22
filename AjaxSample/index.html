@@ -14,52 +14,40 @@
     <form>
       <div class="row">
         <label for="productID">Product ID</label>
-        <input id="productID" name="productID" type="text" value="0" />
+        <input id="productID" name="productID" type="text" data-onfocus="Enter a Product ID" value="0" />
       </div>
       <div class="row">
         <label for="name">Product Name</label>
-        <input id="name" name="name" type="text" value="A New Product" />
+        <input id="name" name="name" type="text" data-onfocus="Enter a Product Name" value="A New Product" />
       </div>
       <div class="row">
         <label for="productNumber">Product Number</label>
-        <input id="productNumber" name="productNumber" type="text" value="NEW-999" />
+        <input id="productNumber" name="productNumber" type="text" data-onfocus="Enter a Product Number"
+          value="NEW-999" />
       </div>
       <div class="row">
         <label for="color">Color</label>
-        <input id="color" name="color" type="text" value="Red" />
+        <input id="color" name="color" type="text" data-onfocus="Enter a Color" value="Red" />
       </div>
       <div class="row">
         <label for="standardCost">Cost</label>
-        <input id="standardCost" name="standardCost" type="number" value="10.00" />
+        <input id="standardCost" name="standardCost" type="number" data-onfocus="Enter the Product Cost"
+          value="10.00" />
       </div>
       <div class="row">
         <label for="listPrice">Price</label>
-        <input id="listPrice" name="listPrice" type="number" value="25.00" />
+        <input id="listPrice" name="listPrice" type="number" data-onfocus="Enter the Product Price" value="25.00" />
       </div>
       <div class="row">
         <label for="sellStartDate">Sell Start Date</label>
-        <input id="sellStartDate" name="sellStartDate" type="text" value="1/15/2021" />
+        <input id="sellStartDate" name="sellStartDate" type="text"
+          data-onfocus="Enter the date the Product can start selling" value="1/15/2021" />
       </div>
       <div class="row">
         <label id="message" class="infoMessage"></label>
         <label id="error" class="errorMessage"></label>
       </div>
       <div class="row">
-        <button type="button" onclick="theNestingProblem();">
-          Nesting Problem
-        </button>
-        <button type="button" onclick="theNestingSolution();">
-          Nesting Solution
-        </button>
-        <button type="button" onclick="setTimeoutCallback();">
-          setTimeout Callback
-        </button>
-        <button type="button" onclick="setTimeoutDeferred();">
-          setTimeout Deferred
-        </button>
-        <button type="button" onclick="performCounting();">
-          Notify Event
-        </button>
       </div>
     </form>
 
@@ -68,104 +56,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
       'use strict';
+      $(document).ready(function () {
+        // Display message using form event 'focus'
+        $("input").on('focus', function () {
+          let msg = $(this).data("onfocus");
+          displayMessage(msg);
+        });
+
+        // Clear message using form event 'blur'
+        $("input").on('blur', function () {
+          displayMessage("");
+        });
+
+      });
 
       const URL = "http://localhost:5000/api";
-
-      function theNestingProblem() {
-        // Too much nesting for dependent data
-        $.get(URL + "/product", function (data) {
-          console.log(data);
-          $.get(URL + "/productcategory", function (data) {
-            console.log(data);
-            $.get(URL + "/productmodel", function (data) {
-              console.log(data);
-            });
-          });
-        });
-      }
-      function theNestingSolution() {
-        var def = $.Deferred();
-        def
-          .then(function () {
-            return $.get(URL + "/product").done(function (data) {
-              console.log(data);
-            });
-          })
-          .then(
-            function () {
-              return $.get(URL + "/productcategory").done(function (data) {
-                console.log(data);
-              });
-            })
-          .then(
-            function () {
-              return $.get(URL + "/productmodel").done(function (data) {
-                console.log(data);
-              });
-            }
-          );
-
-        def.resolve();
-      }
-      
-      function setTimeoutCallback() {
-        setTimeout(() => {
-          console.log('Displayed after one second...');
-        }, 1000);
-      }
-      function timeout(milliseconds) {
-        // Create a new Deferred object
-        var def = $.Deferred();
-
-        // Resolve the Deferred after the amount of time 
-        // specified by the milliseconds passed in
-        setTimeout(def.resolve, milliseconds);
-
-        // Return the Deferred's Promise object
-        return def.promise();
-      }
-      function setTimeoutDeferred() {
-        timeout(1000).then(() => {
-          console.log('Displayed after one second...');
-        });
-      }
-
-      function counter(total, notifyOn) {
-        // Create a new Deferred object
-        var def = $.Deferred();
-
-        let count = 0;
-        // Simulate making some call using setInterval()
-        let id = setInterval(function () {
-          count++;
-          if ((count % notifyOn) === 0) {
-            def.notify(count);
-          }
-          if (count === total) {
-            def.resolve();
-            clearInterval(id);
-          }
-        }, 1);
-
-        // Return the Deferred's Promise object
-        return def.promise();
-      }
-
-      function performCounting() {
-        // Get promise from the counter() function
-        let promise = counter(200, 10);
-
-        // Connect to the progress() method
-        promise.progress(function (data) {
-          console.log(data);
-        });
-
-        // Connect to the done() method
-        // Could also use the then() method
-        promise.done(function () {
-          console.log('Finished Counting');
-        });
-      }
     </script>
   </body>
 
