@@ -51,6 +51,12 @@
         <button type="button" onclick="theNestingSolution();">
           Nesting Solution
         </button>
+        <button type="button" onclick="setTimeoutCallback();">
+          setTimeout Callback
+        </button>
+        <button type="button" onclick="setTimeoutDeferred();">
+          setTimeout Deferred
+        </button>
       </div>
     </form>
 
@@ -74,7 +80,6 @@
           });
         });
       }
-
       function theNestingSolution() {
         var def = $.Deferred();
         def
@@ -98,6 +103,29 @@
           );
 
         def.resolve();
+      }
+      
+      function setTimeoutCallback() {
+        setTimeout(() => {
+          console.log('Displayed after one second...');
+        }, 1000);
+      }
+      function timeout(milliseconds) {
+        // Create a new Deferred object
+        var def = $.Deferred();
+
+        // Resolve the Deferred after the amount of time 
+        // specified by the milliseconds passed in
+        setTimeout(def.resolve, milliseconds);
+
+        // Return the Deferred's Promise object
+        return def.promise();
+      }
+
+      function setTimeoutDeferred() {
+        timeout(1000).then(() => {
+          console.log('Displayed after one second...');
+        });
       }
 
     </script>
