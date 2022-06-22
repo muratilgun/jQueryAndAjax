@@ -11,6 +11,9 @@
     <h1>Ajax Samples</h1>
     <p>Bring up console window</p>
 
+    <div class="row" id="header">
+    </div>
+
     <form>
       <div class="row">
         <label for="productID">Product ID</label>
@@ -59,6 +62,9 @@
         </button>
         <button type="button" onclick="deleteProduct();">
           Delete Product
+        </button>
+        <button type="button" onclick="loadHTML();">
+          Load HTML
         </button>
         <!-- <button type="button" onclick="incorrectTryCatch();">
           incorrect try..catch Product
@@ -423,6 +429,16 @@
         .always(function(){
           console.log("In the always() method");
         })
+      }
+      function loadHTML() {
+        let url = "http://localhost:5000/StaticContent/header.html";
+
+        $("#header").load(url, null, function (response, status, xhr) {
+          if (status == "error") {
+            let msg = "Sorry but there was an error: ";
+            displayError(msg + xhr.status + " - " + xhr.statusText);
+          }
+        });
       }
       function getJSON() {
         let url = "http://localhost:5000/StaticContent/productCategory.json";

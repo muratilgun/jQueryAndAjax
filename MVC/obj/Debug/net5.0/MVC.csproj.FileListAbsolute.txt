@@ -5,7 +5,6 @@ C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\bin\Debug\net5.0\MVC.deps.json
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\bin\Debug\net5.0\MVC.runtimeconfig.json
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\bin\Debug\net5.0\MVC.runtimeconfig.dev.json
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\bin\Debug\net5.0\MVC.dll
-C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\bin\Debug\net5.0\ref\MVC.dll
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\bin\Debug\net5.0\MVC.pdb
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\bin\Debug\net5.0\MVC.Views.dll
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\bin\Debug\net5.0\MVC.Views.pdb
@@ -18,7 +17,6 @@ C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\MVC.MvcApplicatio
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\MVC.RazorAssemblyInfo.cache
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\MVC.RazorAssemblyInfo.cs
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\staticwebassets\MVC.StaticWebAssets.Manifest.cache
-C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\staticwebassets\MVC.StaticWebAssets.xml
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\scopedcss\bundle\MVC.styles.css
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\MVC.TagHelpers.input.cache
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\MVC.TagHelpers.output.cache
@@ -38,3 +36,4 @@ C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\ref\MVC.dll
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\MVC.pdb
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\MVC.genruntimeconfig.cache
 C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\MVC.csproj.CopyComplete
+C:\Users\MURAT\source\repos\jQueryAndAjax\MVC\obj\Debug\net5.0\refint\MVC.dll

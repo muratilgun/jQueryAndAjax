@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "AvJUo9QsEkuyY+WxeMeQWvM0Qjqr0aHJJpCNBMGQNMWcHHzQ+NleebYwK7CZf6PWvGRi4Q9RKJevFd+VRmHjOA==",
+  "dgSpecHash": "aDXqErx7DkMAgSEFVgf4ZNNTWzSP/LKGxEO7/IoUQMz3lOXcmJI09oizuE6jjtpnn38Urzr3Kv7ekpzLZFDDtQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\MURAT\\source\\repos\\jQueryAndAjax\\MVC\\MVC.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\MURAT\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.16\\microsoft.netcore.app.host.win-x64.5.0.16.nupkg.sha512"
+  ],
   "logs": []
 }
