@@ -17,7 +17,6 @@
         <input id="productID" name="productID" type="text" data-onfocus="Enter a Product ID" value="0" />
       </div>
       <div class="row">
-      
         <label for="name">Product Name</label>
         <input id="name" name="name" type="text" data-onfocus="Enter a Product Name" value="A New Product" />
       </div>
@@ -58,6 +57,9 @@
         <button data-type="post">
           Insert Product
         </button>
+        <button type="button" onclick="insertProductUsingArray();">
+          Insert using Array
+        </button>
         <button data-type="put">
           Update Product
         </button>
@@ -72,6 +74,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
       'use strict';
+
       $(document).ready(function () {
         // Display message using form event 'focus'
         $("input").on('focus', function () {
@@ -94,11 +97,115 @@
             updateProduct();
           }
         });
-
-
       });
 
-      const URL = "http://localhost:5000/api";
+      const URL = "http://localhost:5000/api/product";
+
+      function get() {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function () {
+          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            console.log(this.response);
+            displayMessage("Products Retrieved");
+          }
+        };
+        req.open("GET", URL);
+        req.send();
+      }
+
+      function getProduct() {
+
+      }
+
+      function insertProduct() {
+        // Build product object from user input
+        let product = getFromInput();
+
+        $.ajax({
+          url: URL,
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(product)
+        })
+          .done(function (data) {
+            displayMessage("Product Inserted");
+            console.log(data);
+            setInput(data);
+          })
+          .fail(function (error) {
+            handleAjaxError(error);
+          })
+          .always(function () {
+            // Anything you want to happen here on either fail or done
+          });
+      }
+
+      function updateProduct() {
+        // Build product object from user input
+        let product = getFromInput();
+
+        $.ajax({
+          url: URL + "/" + product.productID,
+          type: "PUT",
+          contentType: "application/json",
+          data: JSON.stringify(product)
+        })
+          .done(function (data) {
+            displayMessage("Product Inserted");
+            console.log(data);
+            setInput(data);
+          })
+          .fail(function (error) {
+            handleAjaxError(error);
+          })
+          .always(function () {
+            // Anything you want to happen here on either fail or done
+          });
+      }
+
+      function insertProductUsingArray() {
+        let url = URL + "/ProductNameValue";
+
+        // Create an array of all input values in the form
+        // Array is in the format
+        //  { name: 'name attribute', value: 'value of input' }
+        let product = $("form").serializeArray();
+
+        $.post({
+          url: url,
+          contentType: "application/json",
+          data: JSON.stringify(product)
+        })
+          .done(function (data) {
+            displayMessage("Product Inserted using serializeArray()");
+            console.log(data);
+            setInput(data);
+          })
+          .fail(function (error) {
+            handleAjaxError(error);
+          })
+          .always(function () {
+            // Anything you want to happen here on either fail or done
+          });
+      }
+
+      function deleteProduct() {
+        $.ajax({
+          url: URL + "/" + getValue("productID"),
+          type: "DELETE"
+        })
+          .done(function (data) {
+            displayMessage("Product Deleted");
+            console.log(data);
+            clearInput();
+          })
+          .fail(function (error) {
+            handleAjaxError(error);
+          })
+          .always(function () {
+            // Anything you want to happen here on either fail or done
+          });
+      }
     </script>
   </body>
 
