@@ -17,6 +17,7 @@
         <input id="productID" name="productID" type="text" data-onfocus="Enter a Product ID" value="0" />
       </div>
       <div class="row">
+      
         <label for="name">Product Name</label>
         <input id="name" name="name" type="text" data-onfocus="Enter a Product Name" value="A New Product" />
       </div>
@@ -48,6 +49,21 @@
         <label id="error" class="errorMessage"></label>
       </div>
       <div class="row">
+        <button type="button" onclick="get();">
+          Get Products
+        </button>
+        <button type="button" onclick="getProduct();">
+          Get a Product
+        </button>
+        <button data-type="post">
+          Insert Product
+        </button>
+        <button data-type="put">
+          Update Product
+        </button>
+        <button type="button" onclick="deleteProduct();">
+          Delete Product
+        </button>
       </div>
     </form>
 
@@ -67,6 +83,18 @@
         $("input").on('blur', function () {
           displayMessage("");
         });
+
+        // Respond to submit form
+        $("form").submit(function (event) {
+          event.preventDefault();
+
+          if ($(document.activeElement).data("type") == "post") {
+            insertProduct();
+          } else {
+            updateProduct();
+          }
+        });
+
 
       });
 
