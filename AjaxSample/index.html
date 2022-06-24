@@ -69,6 +69,9 @@
         <button type="button" onclick="insertProductUsingSerialize();">
           Insert using Serialize
         </button>
+        <button type="button" onclick="insertProductUsingParam();">
+          Insert using Param
+        </button>
       </div>
     </form>
 
@@ -203,6 +206,33 @@
         $.post(url + "?" + product)
           .done(function (data) {
             displayMessage("Product Inserted using serialize()");
+            console.log(data);
+            setInput(data);
+          })
+          .fail(function (error) {
+            handleAjaxError(error);
+          })
+          .always(function () {
+            // Anything you want to happen here on either fail or done
+          });
+      }
+      function insertProductUsingParam() {
+        let url = URL + "/ProductQuery";
+
+        // Get JSON object
+        let tmp = getFromInput();
+
+        // Modify the SellStartDate otherwise $.param() will 
+        // not create the correct date/time for submitting
+        tmp.sellStartDate = tmp.sellStartDate.toUTCString();
+
+        // "serialize()" the JSON object
+        let product = $.param(tmp);
+
+        // Add key/value pair to URL        
+        $.post(url + "?" + product)
+          .done(function (data) {
+            displayMessage("Product Inserted using param()");
             console.log(data);
             setInput(data);
           })

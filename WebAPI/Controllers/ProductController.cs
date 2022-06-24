@@ -202,14 +202,14 @@ namespace WebAPI.Controllers
                 else
                 {
                     ret = StatusCode(StatusCodes.Status400BadRequest,
-                        "Invalid " + ENTITY_NAME +
-                        " object passed to POST method.");
+                              "Invalid " + ENTITY_NAME +
+                              " object passed to POST method.");
                 }
             }
             catch (Exception ex)
             {
                 ret = HandleException(ex,
-                    "Exception trying to insert a new " + ENTITY_NAME + ".");
+                      "Exception trying to insert a new " + ENTITY_NAME + ".");
             }
 
             return ret;
