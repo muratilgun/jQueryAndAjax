@@ -179,6 +179,44 @@ namespace WebAPI.Controllers
             return ret;
         }
 
+        [HttpPost()]
+        [Route("ProductQuery")]
+        public IActionResult PostFromQuery([FromQuery] Product entity)
+        {
+            IActionResult ret = null;
+
+            try
+            {
+                if (entity != null)
+                {
+                    // Fill in required fields not used by client
+                    entity.ProductCategoryID = 18;
+                    entity.ProductModelID = 6;
+                    entity.rowguid = Guid.NewGuid();
+                    entity.ModifiedDate = DateTime.Now;
+
+                    _DbContext.Products.Add(entity);
+                    _DbContext.SaveChanges();
+                    ret = StatusCode(StatusCodes.Status201Created, entity);
+                }
+                else
+                {
+                    ret = StatusCode(StatusCodes.Status400BadRequest,
+                        "Invalid " + ENTITY_NAME +
+                        " object passed to POST method.");
+                }
+            }
+            catch (Exception ex)
+            {
+                ret = HandleException(ex,
+                    "Exception trying to insert a new " + ENTITY_NAME + ".");
+            }
+
+            return ret;
+        }
+
+
+
         [HttpPut("{id}")]
         public IActionResult Put(int id, Product entity)
         {

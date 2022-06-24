@@ -57,14 +57,17 @@
         <button data-type="post">
           Insert Product
         </button>
-        <button type="button" onclick="insertProductUsingArray();">
-          Insert using Array
-        </button>
         <button data-type="put">
           Update Product
         </button>
         <button type="button" onclick="deleteProduct();">
           Delete Product
+        </button>
+        <button type="button" onclick="insertProductUsingArray();">
+          Insert using Array
+        </button>
+        <button type="button" onclick="insertProductUsingSerialize();">
+          Insert using Serialize
         </button>
       </div>
     </form>
@@ -188,7 +191,28 @@
             // Anything you want to happen here on either fail or done
           });
       }
+      function insertProductUsingSerialize() {
+        let url = URL + "/ProductQuery";
 
+        // Create a url-encoded key/value pair to pass on the URL
+        // &nameAttribute=value&nameAttribute=value... etc.
+        let product = $("form").serialize();
+        console.log(product);
+
+        // Add key/value pair to URL        
+        $.post(url + "?" + product)
+          .done(function (data) {
+            displayMessage("Product Inserted using serialize()");
+            console.log(data);
+            setInput(data);
+          })
+          .fail(function (error) {
+            handleAjaxError(error);
+          })
+          .always(function () {
+            // Anything you want to happen here on either fail or done
+          });
+      }
       function deleteProduct() {
         $.ajax({
           url: URL + "/" + getValue("productID"),
