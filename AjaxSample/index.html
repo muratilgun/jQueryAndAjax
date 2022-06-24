@@ -14,34 +14,32 @@
     <form>
       <div class="row">
         <label for="productID">Product ID</label>
-        <input id="productID" name="productID" type="text" data-onfocus="Enter a Product ID" value="0" />
+        <input id="productID" name="productID" type="text" value="0" />
       </div>
       <div class="row">
         <label for="name">Product Name</label>
-        <input id="name" name="name" type="text" data-onfocus="Enter a Product Name" value="A New Product" />
+        <input id="name" name="name" type="text" title="&nbsp;Product Name is required" required minlength="4" />
       </div>
       <div class="row">
         <label for="productNumber">Product Number</label>
-        <input id="productNumber" name="productNumber" type="text" data-onfocus="Enter a Product Number"
-          value="NEW-999" />
+        <input id="productNumber" name="productNumber" type="text" title="&nbsp;Product Number is required" required
+          minlength="3" />
       </div>
       <div class="row">
         <label for="color">Color</label>
-        <input id="color" name="color" type="text" data-onfocus="Enter a Color" value="Red" />
+        <input id="color" name="color" type="text" title="&nbsp;Color is required" required minlength="3" />
       </div>
       <div class="row">
         <label for="standardCost">Cost</label>
-        <input id="standardCost" name="standardCost" type="number" data-onfocus="Enter the Product Cost"
-          value="10.00" />
+        <input id="standardCost" name="standardCost" type="number" required min="0.01" />
       </div>
       <div class="row">
         <label for="listPrice">Price</label>
-        <input id="listPrice" name="listPrice" type="number" data-onfocus="Enter the Product Price" value="25.00" />
+        <input id="listPrice" name="listPrice" type="number" required min="0.02" />
       </div>
       <div class="row">
         <label for="sellStartDate">Sell Start Date</label>
-        <input id="sellStartDate" name="sellStartDate" type="text"
-          data-onfocus="Enter the date the Product can start selling" value="1/15/2021" />
+        <input id="sellStartDate" name="sellStartDate" type="text" required min="2010-01-01" />
       </div>
       <div class="row">
         <label id="message" class="infoMessage"></label>
@@ -54,26 +52,15 @@
         <button type="button" onclick="getProduct();">
           Get a Product
         </button>
-        <button data-type="post">
-          Insert Product
-        </button>
-        <button data-type="put">
-          Update Product
-        </button>
+        <button data-type="post">Insert Product</button>
+        <button data-type="put">Update Product</button>
+
         <button type="button" onclick="deleteProduct();">
           Delete Product
         </button>
-        <button type="button" onclick="insertProductUsingArray();">
-          Insert using Array
-        </button>
-        <button type="button" onclick="insertProductUsingSerialize();">
-          Insert using Serialize
-        </button>
-        <button type="button" onclick="insertProductUsingParam();">
-          Insert using Param
-        </button>
       </div>
     </form>
+
 
     <script src="/scripts/ajax-common.js"></script>
     <script src="/scripts/product.js"></script>
@@ -81,30 +68,27 @@
     <script src="/node_modules/jquery-validation/dist/jquery.validate.min.js"></script>
     <script>
       'use strict';
-
+    
       $(document).ready(function () {
-        // Display message using form event 'focus'
-        $("input").on('focus', function () {
-          let msg = $(this).data("onfocus");
-          displayMessage(msg);
-        });
+        // Validate the form using the the various attributes
+        $("form").validate();
 
-        // Clear message using form event 'blur'
-        $("input").on('blur', function () {
-          displayMessage("");
-        });
-
-        // Respond to submit form
+        // Submit the form
         $("form").submit(function (event) {
           event.preventDefault();
 
-          if ($(document.activeElement).data("type") == "post") {
-            insertProduct();
-          } else {
-            updateProduct();
+          // Ensure the form has been validated
+          if ($("form").valid()) {
+            if ($(document.activeElement).data("type") == "post") {
+              insertProduct();
+            } else {
+              updateProduct();
+            }
           }
         });
       });
+
+
 
       const URL = "http://localhost:5000/api/product";
 
@@ -119,147 +103,16 @@
         req.open("GET", URL);
         req.send();
       }
-
       function getProduct() {
 
       }
-
       function insertProduct() {
-        // Build product object from user input
-        let product = getFromInput();
-
-        $.ajax({
-          url: URL,
-          type: "POST",
-          contentType: "application/json",
-          data: JSON.stringify(product)
-        })
-          .done(function (data) {
-            displayMessage("Product Inserted");
-            console.log(data);
-            setInput(data);
-          })
-          .fail(function (error) {
-            handleAjaxError(error);
-          })
-          .always(function () {
-            // Anything you want to happen here on either fail or done
-          });
       }
-
       function updateProduct() {
-        // Build product object from user input
-        let product = getFromInput();
 
-        $.ajax({
-          url: URL + "/" + product.productID,
-          type: "PUT",
-          contentType: "application/json",
-          data: JSON.stringify(product)
-        })
-          .done(function (data) {
-            displayMessage("Product Inserted");
-            console.log(data);
-            setInput(data);
-          })
-          .fail(function (error) {
-            handleAjaxError(error);
-          })
-          .always(function () {
-            // Anything you want to happen here on either fail or done
-          });
-      }
-
-      function insertProductUsingArray() {
-        let url = URL + "/ProductNameValue";
-
-        // Create an array of all input values in the form
-        // Array is in the format
-        //  { name: 'name attribute', value: 'value of input' }
-        let product = $("form").serializeArray();
-
-        $.post({
-          url: url,
-          contentType: "application/json",
-          data: JSON.stringify(product)
-        })
-          .done(function (data) {
-            displayMessage("Product Inserted using serializeArray()");
-            console.log(data);
-            setInput(data);
-          })
-          .fail(function (error) {
-            handleAjaxError(error);
-          })
-          .always(function () {
-            // Anything you want to happen here on either fail or done
-          });
-      }
-      function insertProductUsingSerialize() {
-        let url = URL + "/ProductQuery";
-
-        // Create a url-encoded key/value pair to pass on the URL
-        // &nameAttribute=value&nameAttribute=value... etc.
-        let product = $("form").serialize();
-        console.log(product);
-
-        // Add key/value pair to URL        
-        $.post(url + "?" + product)
-          .done(function (data) {
-            displayMessage("Product Inserted using serialize()");
-            console.log(data);
-            setInput(data);
-          })
-          .fail(function (error) {
-            handleAjaxError(error);
-          })
-          .always(function () {
-            // Anything you want to happen here on either fail or done
-          });
-      }
-      function insertProductUsingParam() {
-        let url = URL + "/ProductQuery";
-
-        // Get JSON object
-        let tmp = getFromInput();
-
-        // Modify the SellStartDate otherwise $.param() will 
-        // not create the correct date/time for submitting
-        tmp.sellStartDate = tmp.sellStartDate.toUTCString();
-
-        // "serialize()" the JSON object
-        let product = $.param(tmp);
-
-        // Add key/value pair to URL        
-        $.post(url + "?" + product)
-          .done(function (data) {
-            displayMessage("Product Inserted using param()");
-            console.log(data);
-            setInput(data);
-          })
-          .fail(function (error) {
-            handleAjaxError(error);
-          })
-          .always(function () {
-            // Anything you want to happen here on either fail or done
-          });
       }
       function deleteProduct() {
-        $.ajax({
-          url: URL + "/" + getValue("productID"),
-          type: "DELETE"
-        })
-          .done(function (data) {
-            displayMessage("Product Deleted");
-            console.log(data);
-            clearInput();
-          })
-          .fail(function (error) {
-            handleAjaxError(error);
-          })
-          .always(function () {
-            // Anything you want to happen here on either fail or done
-          });
+
       }
     </script>
   </body>
